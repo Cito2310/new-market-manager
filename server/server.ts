@@ -8,7 +8,7 @@ import { validateEnv } from "./config/env";
 
 import { notFound, errorHandler } from "./middlewares/errorHandler";
 
-import { routeUser } from "./features/users/userRoutes";
+import { routeUser } from "./features/user/userRoutes";
 import { routeHealth } from "./features/health/healthRoutes";
 
 export class Server {

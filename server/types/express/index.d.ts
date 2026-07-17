@@ -1,7 +1,7 @@
-import { IUser } from '../Interfaces';
+import type { UserDocument } from "../../features/user/userModels";
 
-declare module 'express-serve-static-core' {
+declare module "express-serve-static-core" {
     interface Request {
-        user: IUser;
+        user: UserDocument;
     }
 }
