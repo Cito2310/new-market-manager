@@ -5,7 +5,7 @@ export const generatorJWT = (payload: { [key: string]: unknown }): Promise<strin
         jwt.sign(
             payload,
             process.env.SECRET_OR_PRIVATE_KEY as string,
-            { expiresIn: "4h" },
+            { expiresIn: "12h" },
             (err, token) => {
                 if (err) {
                     console.log(err);

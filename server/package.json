@@ -2,11 +2,11 @@
     "name": "new-market-manager-server",
     "version": "1.0.1",
     "description": "Backend API for New Market Manager",
-    "main": "dist/app.js",
+    "main": "dist/server/app.js",
     "scripts": {
         "dev": "tsx watch app.ts",
         "build": "tsc",
-        "start": "node dist/app.js",
+        "start": "node dist/server/app.js",
         "typecheck": "tsc --noEmit",
         "lint": "eslint .",
         "format": "prettier --write ."

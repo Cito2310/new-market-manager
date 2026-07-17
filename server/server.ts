@@ -8,8 +8,8 @@ import { validateEnv } from "./config/env";
 
 import { notFound, errorHandler } from "./middlewares/errorHandler";
 
-import { routeUser } from "./users_api/userRoutes";
-import { routeHealth } from "./health_api/healthRoutes";
+import { routeUser } from "./features/users/userRoutes";
+import { routeHealth } from "./features/health/healthRoutes";
 
 export class Server {
     private app = express();

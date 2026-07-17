@@ -3,9 +3,9 @@ import { check } from "express-validator";
 
 import { createUser, changeDataUser, loginUser, deleteUser, getUser } from './userControllers';
 
-import { checkFields } from '../middlewares/checkFields';
-import { validateJWT } from '../middlewares/validateJWT';
-import * as validation from "../helpers/validation";
+import { checkFields } from '../../middlewares/checkFields';
+import { validateJWT } from '../../middlewares/validateJWT';
+import * as validation from "../../helpers/validation";
 
 export const routeUser = Router();
 

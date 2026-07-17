@@ -3,9 +3,9 @@ import bcryptjs from "bcryptjs";
 
 import { User } from "./userModels";
 
-import { generatorJWT } from '../helpers/generatorJWT';
+import { generatorJWT } from '../../helpers/generatorJWT';
 
-import { IBodyUser, IBodyChangeDataUser, IBodyLogin } from '../types/InputBodyTypes';
+import { IBodyUser, IBodyChangeDataUser, IBodyLogin } from '../../types/InputBodyTypes';
 
 
 
