@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { check, param } from "express-validator";
 
-import { createCategory, getCategories, getCategory, updateCategory, deleteCategory } from "./controllers";
-import { categoryExists } from "./categoryValidators";
+import { createCategory, getCategories, updateCategory, deleteCategory } from "./controllers";
+import { categoryExists, categoryUpdatable } from "./categoryValidators";
 
 import { checkFields } from "../../middlewares/checkFields";
 import { validateJWT } from "../../middlewares/validateJWT";
@@ -37,21 +37,11 @@ routeCategory.post("/", [
 routeCategory.get("/", [ validateJWT, hasRole("admin", "cashier", "visit") ], getCategories);
 
 
-routeCategory.get("/:id", [
-    validateJWT,
-    hasRole("admin", "cashier", "visit"),
-
-    param("id", "invalid category id").isMongoId(),
-
-    checkFields
-], getCategory);
-
-
 routeCategory.patch("/:id", [
     validateJWT,
     hasRole("admin", "cashier"),
 
-    param("id", "invalid category id").isMongoId(),
+    param("id", "invalid category id").isMongoId().bail().custom(categoryUpdatable),
 
     check("section", "section invalid").optional().isIn([...SECTIONS]),
 

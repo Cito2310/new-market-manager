@@ -10,6 +10,7 @@ import { notFound, errorHandler } from "./middlewares/errorHandler";
 
 import { routeUser } from "./features/user/userRoutes";
 import { routeCategory } from "./features/category/categoryRoutes";
+import { routeProduct } from "./features/product/productRoutes";
 import { routeHealth } from "./features/health/healthRoutes";
 
 export class Server {
@@ -19,6 +20,7 @@ export class Server {
         health: "/api/health",
         user: "/api/user",
         category: "/api/category",
+        product: "/api/product",
     };
 
     constructor() {
@@ -38,6 +40,7 @@ export class Server {
         this.app.use(this.paths.health, routeHealth);
         this.app.use(this.paths.user, routeUser);
         this.app.use(this.paths.category, routeCategory);
+        this.app.use(this.paths.product, routeProduct);
 
         // Error handling must be registered after the routes
         this.app.use(notFound);

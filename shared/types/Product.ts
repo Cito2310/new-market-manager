@@ -6,7 +6,9 @@ export interface Promotion {
     pricePerUnit: number;
 }
 
-export type SizeUnit = "unit" | "kg" | "g" | "l" | "ml" | "m" | "oz";
+export const SIZE_UNITS = ["unit", "kg", "g", "l", "ml", "m", "oz"] as const;
+
+export type SizeUnit = (typeof SIZE_UNITS)[number];
 
 export interface Batch {
     _id: string;

@@ -69,10 +69,13 @@ routeUser.delete("/",[ validateJWT, hasRole("admin", "cashier") ], deleteUser);
 
 
 routeUser.post("/login",[
+    check("username", "username is required").trim().notEmpty(),
+    check("username", "username invalid").trim().isString(),
+    check("username", "username invalid").trim().isLength({max: 100}),
+
+    check("password", "password is required").trim().notEmpty(),
     check("password", "password invalid").trim().isString(),
     check("password", "password invalid").trim().isLength({max: 100}),
 
-    check("username", "username invalid").trim().isString(),
-    check("username", "username invalid").trim().isLength({max: 100}),
     checkFields
 ], loginUser);
