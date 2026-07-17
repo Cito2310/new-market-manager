@@ -3,10 +3,11 @@ import { check, param } from "express-validator";
 
 import { createUser, updateUser, getUser, deleteUser, loginUser, updateUserByAdmin } from "./controllers";
 
+import { usernameExist, passwordEqual, usernameEqual } from "./userValidators";
+
 import { checkFields } from '../../middlewares/checkFields';
 import { validateJWT } from '../../middlewares/validateJWT';
 import { hasRole } from '../../middlewares/hasRole';
-import * as validation from "../../helpers/validation";
 
 export const routeUser = Router();
 
@@ -23,7 +24,7 @@ routeUser.post("/register",[
     check("username", "username is required").trim().notEmpty(),
     check("username", "username not is string").trim().isString(),
     check("username", "username length can only be greater than 6 and less than 32 characters").trim().isLength({min: 6, max: 32}),
-    check("username", "username invalid, it already exists").trim().custom(validation.usernameExist),
+    check("username", "username invalid, it already exists").trim().custom(usernameExist),
 
     checkFields
 ], createUser);
@@ -37,12 +38,12 @@ routeUser.put("/",[
 
     check("password", "password invalid").optional().trim().isString(),
     check("password", "password length can only be greater than 8 and less than 32 characters").optional().trim().isLength({min: 8, max: 32}),
-    check("password", "password invalid, equal password").optional().trim().custom(validation.passwordEqual),
+    check("password", "password invalid, equal password").optional().trim().custom(passwordEqual),
 
     check("username", "username not is string").optional().trim().isString(),
     check("username", "username length can only be greater than 6 and less than 32 characters").optional().trim().isLength({min: 6, max: 32}),
-    check("username", "username invalid, it already exists").optional().trim().custom(validation.usernameExist),
-    check("username", "username invalid, equal username").optional().trim().custom(validation.usernameEqual),
+    check("username", "username invalid, it already exists").optional().trim().custom(usernameExist),
+    check("username", "username invalid, equal username").optional().trim().custom(usernameEqual),
 
     checkFields
 ], updateUser);

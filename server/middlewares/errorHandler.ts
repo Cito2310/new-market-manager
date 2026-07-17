@@ -13,6 +13,12 @@ export const errorHandler = (error: unknown, _req: Request, res: Response, _next
         return;
     }
 
+    // Mongo duplicate key (unique index) → 409
+    if (error && typeof error === "object" && (error as { code?: number }).code === 11000) {
+        res.status(409).json({ msg: "duplicate resource" });
+        return;
+    }
+
     console.error(error);
     res.status(500).json({ msg: "unexpected server error" });
 };

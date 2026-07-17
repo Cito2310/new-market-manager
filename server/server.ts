@@ -9,6 +9,7 @@ import { validateEnv } from "./config/env";
 import { notFound, errorHandler } from "./middlewares/errorHandler";
 
 import { routeUser } from "./features/user/userRoutes";
+import { routeCategory } from "./features/category/categoryRoutes";
 import { routeHealth } from "./features/health/healthRoutes";
 
 export class Server {
@@ -17,6 +18,7 @@ export class Server {
     private paths = {
         health: "/api/health",
         user: "/api/user",
+        category: "/api/category",
     };
 
     constructor() {
@@ -35,6 +37,7 @@ export class Server {
     private routes() {
         this.app.use(this.paths.health, routeHealth);
         this.app.use(this.paths.user, routeUser);
+        this.app.use(this.paths.category, routeCategory);
 
         // Error handling must be registered after the routes
         this.app.use(notFound);
