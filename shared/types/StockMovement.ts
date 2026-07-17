@@ -1,5 +1,4 @@
 export type MovementType = 
-    | "sale"
     | "purchase"
     | "adjustment"
     | "return"
