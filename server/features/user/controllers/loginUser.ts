@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import bcryptjs from "bcryptjs";
 
 import { UserModel } from "../userModels";
-import { LoginBody } from "../../../../shared/types";
+import { LoginBody, LoginResponse, PublicUser } from "../../../../shared/types";
 import { generatorJWT } from "../../../helpers/generatorJWT";
 import { ApiError } from "../../../helpers/ApiError";
 
@@ -20,5 +20,9 @@ export const loginUser = async (req: Request, res: Response) => {
     if (!user.active) throw new ApiError(403, "user is inactive");
 
     const token: string = await generatorJWT({ id: user._id });
-    res.status(200).json({ token });
+
+    // toJSON strips passwordHash and serializes _id to string at runtime;
+    // Mongoose's types don't know that, so cast through unknown
+    const response: LoginResponse = { token, user: user.toJSON() as unknown as PublicUser };
+    res.status(200).json(response);
 };

@@ -15,6 +15,15 @@ export interface User {
 // Persisted user shape. Mongoose owns `_id`, so it is dropped from the domain type.
 export type UserMongo = Omit<User, "_id">;
 
+// User shape safe to send to the client (never includes passwordHash).
+export type PublicUser = Omit<User, "passwordHash">;
+
+// POST /login response
+export interface LoginResponse {
+    token: string;
+    user: PublicUser;
+}
+
 // POST /register — password comes in plain text (the server hashes it into passwordHash).
 // role/active are set by the server, so they are not part of the body.
 export type CreateUserBody = Pick<User, "username" | "displayName"> & { password: string };

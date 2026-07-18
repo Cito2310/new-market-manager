@@ -1,15 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { User } from "../../../../shared/types";
-
-// The client never holds the password hash.
-export type AuthUser = Omit<User, "passwordHash">;
+import type { PublicUser } from "../../../../shared/types";
 
 type AuthStatus = "idle" | "loading" | "authenticated" | "error";
 
 interface AuthState {
     token: string | null;
-    user: AuthUser | null;
+    user: PublicUser | null;
     status: AuthStatus;
     error: string | null;
 }
@@ -25,9 +22,13 @@ export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        // Rehydrates a persisted token on app start; the user is fetched afterwards.
-        restoreSession: (state, action: PayloadAction<{ token: string }>) => {
+        // Rehydrates a persisted session (token + user) on app start.
+        restoreSession: (
+            state,
+            action: PayloadAction<{ token: string; user: PublicUser }>,
+        ) => {
             state.token = action.payload.token;
+            state.user = action.payload.user;
             state.status = "authenticated";
         },
         loginStart: (state) => {
@@ -36,10 +37,10 @@ export const authSlice = createSlice({
         },
         loginSuccess: (
             state,
-            action: PayloadAction<{ token: string; user?: AuthUser }>,
+            action: PayloadAction<{ token: string; user: PublicUser }>,
         ) => {
             state.token = action.payload.token;
-            state.user = action.payload.user ?? null;
+            state.user = action.payload.user;
             state.status = "authenticated";
             state.error = null;
         },

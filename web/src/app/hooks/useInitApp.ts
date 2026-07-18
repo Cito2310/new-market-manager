@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import type { PublicUser } from "../../../../shared/types";
 import { useAppDispatch } from "../store/hooks";
 import { restoreSession } from "../../features/auth/authSlice";
 import { storage } from "../storage";
@@ -10,7 +11,8 @@ export const useInitApp = () => {
     useEffect(() => {
         const init = async () => {
             const token = await storage.get<string>("token");
-            if (token) dispatch(restoreSession({ token }));
+            const user = await storage.get<PublicUser>("user");
+            if (token && user) dispatch(restoreSession({ token, user }));
         };
 
         init();
