@@ -1,5 +1,5 @@
-import { SalesByMethod } from "./Sales";
-import { Withdrawal } from "./Withdrawal";
+import type { SalesByMethod } from "./Sales";
+import type { Withdrawal } from "./Withdrawal";
 
 export interface DailyReport {
     _id: string;

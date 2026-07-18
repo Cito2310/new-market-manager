@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { CategoryModel } from "../categoryModels";
-import { CreateCategoryBody } from "../categoryTypes";
+import { CreateCategoryBody } from "../../../../shared/types";
 
 // Create Category
 export const createCategory = async (req: Request, res: Response) => {

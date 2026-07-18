@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { ProductModel } from "../productModels";
-import { UpdateProductBody } from "../productTypes";
+import { UpdateProductBody } from "../../../../shared/types";
 import { ApiError } from "../../../helpers/ApiError";
 
 // Update Product (replaces the provided top-level blocks)

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { ProductModel } from "../productModels";
-import { CreateProductBody } from "../productTypes";
+import { CreateProductBody } from "../../../../shared/types";
 
 // Create Product
 export const createProduct = async (req: Request, res: Response) => {

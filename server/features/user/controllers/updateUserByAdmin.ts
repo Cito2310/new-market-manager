@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { UserModel } from "../userModels";
-import { AdminUpdateUserBody, UserMongo } from "../userTypes";
+import { AdminUpdateUserBody, UserMongo } from "../../../../shared/types";
 import { ApiError } from "../../../helpers/ApiError";
 
 // Update User role/active - Admin only

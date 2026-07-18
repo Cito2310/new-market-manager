@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { CategoryModel } from "../categoryModels";
-import { CategoryMongo, UpdateCategoryBody } from "../categoryTypes";
+import { CategoryMongo, UpdateCategoryBody } from "../../../../shared/types";
 import { ApiError } from "../../../helpers/ApiError";
 
 // Update Category

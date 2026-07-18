@@ -1,7 +1,6 @@
 import { HydratedDocument, model, Schema } from "mongoose";
 
-import { CategoryMongo } from "./categoryTypes";
-import { SECTIONS } from "../../../shared/types";
+import { CategoryMongo, SECTIONS } from "../../../shared/types";
 
 // Hydrated Mongoose document for a category
 export type CategoryDocument = HydratedDocument<CategoryMongo>;

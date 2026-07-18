@@ -1,5 +1,5 @@
 import { HydratedDocument, model, Schema } from "mongoose";
-import { UserMongo } from "./userTypes";
+import { UserMongo } from "../../../shared/types";
 
 // Hydrated Mongoose document for a user (what queries return, what req.user holds)
 export type UserDocument = HydratedDocument<UserMongo>;

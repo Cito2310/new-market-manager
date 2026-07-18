@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import bcryptjs from "bcryptjs";
 
 import { UserModel } from "../userModels";
-import { CreateUserBody } from "../userTypes";
+import { CreateUserBody } from "../../../../shared/types";
 import { generatorJWT } from "../../../helpers/generatorJWT";
 
 // Create User

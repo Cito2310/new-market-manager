@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import bcryptjs from "bcryptjs";
 
 import { UserModel } from "../userModels";
-import { UpdateUserBody, UserMongo } from "../userTypes";
+import { UpdateUserBody, UserMongo } from "../../../../shared/types";
 
 // Update User - Need Token
 export const updateUser = async (req: Request, res: Response) => {
