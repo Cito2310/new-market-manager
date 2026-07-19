@@ -4,7 +4,14 @@ import type { StorageAdapter } from "./storage.types";
 export const localStorageAdapter: StorageAdapter = {
     get: async <T>(key: string): Promise<T | null> => {
         const raw = localStorage.getItem(key);
-        return raw === null ? null : (JSON.parse(raw) as T);
+        if (raw === null) return null;
+        try {
+            return JSON.parse(raw) as T;
+        } catch {
+            // Legacy / corrupt non-JSON value: drop it and treat as empty.
+            localStorage.removeItem(key);
+            return null;
+        }
     },
     set: async <T>(key: string, value: T): Promise<void> => {
         localStorage.setItem(key, JSON.stringify(value));
