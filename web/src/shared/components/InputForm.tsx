@@ -16,7 +16,7 @@ export const InputForm = ({
         : "border-slate-300 focus:border-slate-500 focus:ring-slate-400/20";
 
     return (
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1.5 w-full">
             <label className="ml-1 text-sm font-medium text-slate-700">
                 {label}
             </label>

@@ -1,15 +1,15 @@
 import { ButtonForm } from "../../../shared/components/ButtonForm"
 import { SearchIcon } from "../../../shared/components/icons/SearchIcon"
+import { AddProductModal } from "../modals/AddProductModal"
 
 export const ProductPage = () => {
-    return (
+    return <> 
+        <AddProductModal/>
+
         <div className="mx-auto flex max-w-5xl flex-col gap-6 p-8">
             <section className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold text-slate-800">Productos</h1>
-                <ButtonForm>Añadir Producto</ButtonForm>
-                {/* <button className="cursor-pointer rounded-lg bg-slate-800 px-4 py-2.5 font-medium text-white transition hover:bg-slate-700 active:bg-slate-900">
-                    Añadir Producto
-                </button> */}
+                <ButtonForm>+ Añadir Producto</ButtonForm>
             </section>
 
             <div className="flex flex-col gap-4 rounded-2xl bg-white p-6 shadow-xl">
@@ -50,5 +50,5 @@ export const ProductPage = () => {
                 </table>
             </div>
         </div>
-    )
+    </>
 }

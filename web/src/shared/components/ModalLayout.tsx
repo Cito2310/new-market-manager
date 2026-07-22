@@ -5,6 +5,8 @@ type ModalLayoutProps = {
     title?: string;
     subtitle?: string;
     onClose?: () => void;
+    // Tailwind max-width class for the card (e.g. "max-w-md", "max-w-2xl").
+    width?: string;
     children: ReactNode;
 };
 
@@ -14,6 +16,7 @@ export const ModalLayout = ({
     title,
     subtitle,
     onClose,
+    width = "max-w-sm",
     children,
 }: ModalLayoutProps) => {
     // Modal-only behavior: Escape to close and lock body scroll.
@@ -38,33 +41,35 @@ export const ModalLayout = ({
             role={onClose ? "dialog" : undefined}
             aria-modal={onClose ? true : undefined}
             onClick={onClose ? (event) => event.stopPropagation() : undefined}
-            className="relative w-full max-w-sm rounded-2xl bg-white p-8 shadow-xl"
+            className={`relative w-full ${width} rounded-2xl bg-white p-8 shadow-xl`}
         >
-            {onClose && (
-                <button
-                    type="button"
-                    onClick={onClose}
-                    aria-label="Cerrar"
-                    className="absolute right-4 top-4 cursor-pointer text-slate-400 transition hover:text-slate-600"
-                >
-                    ✕
-                </button>
-            )}
+            <div className="flex justify-between items-center mb-4">
+                {(title || subtitle) && (
+                    <section className="text-center">
+                        {title && (
+                            <h1 className="text-2xl font-bold text-slate-800">
+                                {title}
+                            </h1>
+                        )}
+                        {subtitle && (
+                            <p className="mt-1 text-sm text-slate-500">
+                                {subtitle}
+                            </p>
+                        )}
+                    </section>
+                )}
 
-            {(title || subtitle) && (
-                <section className="mb-4 text-center">
-                    {title && (
-                        <h1 className="text-2xl font-bold text-slate-800">
-                            {title}
-                        </h1>
-                    )}
-                    {subtitle && (
-                        <p className="mt-1 text-sm text-slate-500">
-                            {subtitle}
-                        </p>
-                    )}
-                </section>
-            )}
+                {onClose && (
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        aria-label="Cerrar"
+                        className="cursor-pointer text-slate-400 transition hover:text-slate-600"
+                    >
+                        ✕
+                    </button>
+                )}
+            </div>
 
             {children}
         </div>
@@ -79,7 +84,7 @@ export const ModalLayout = ({
     return (
         <div
             onClick={onClose}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4"
+            className="fixed inset-0 z-50 flex flex-col items-center bg-slate-900/20 p-12"
         >
             {card}
         </div>
