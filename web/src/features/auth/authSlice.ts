@@ -2,7 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { PublicUser } from "../../../../shared/types";
 
-type AuthStatus = "idle" | "loading" | "authenticated" | "error";
+type AuthStatus =
+    | "initializing"
+    | "idle"
+    | "loading"
+    | "authenticated"
+    | "error";
 
 interface AuthState {
     token: string | null;
@@ -14,7 +19,7 @@ interface AuthState {
 const initialState: AuthState = {
     token: null,
     user: null,
-    status: "idle",
+    status: "initializing",
     error: null,
 };
 
@@ -30,6 +35,10 @@ export const authSlice = createSlice({
             state.token = action.payload.token;
             state.user = action.payload.user;
             state.status = "authenticated";
+        },
+        // Marks app startup as done when there is no persisted session to restore.
+        initFinished: (state) => {
+            state.status = "idle";
         },
         loginStart: (state) => {
             state.status = "loading";
@@ -59,7 +68,13 @@ export const authSlice = createSlice({
     },
 });
 
-export const { restoreSession, loginStart, loginSuccess, loginFailure, logout } =
-    authSlice.actions;
+export const {
+    restoreSession,
+    initFinished,
+    loginStart,
+    loginSuccess,
+    loginFailure,
+    logout,
+} = authSlice.actions;
 
 export default authSlice.reducer;

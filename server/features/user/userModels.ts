@@ -5,7 +5,7 @@ import { UserMongo } from "../../../shared/types";
 export type UserDocument = HydratedDocument<UserMongo>;
 
 const userSchema = new Schema<UserMongo>({
-    username: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    username: { type: String, required: true, unique: true, trim: true },
     passwordHash: { type: String, required: true },
     role: { type: String, enum: ["cashier", "admin", "visit"], default: "visit" },
     displayName: { type: String, required: true },
