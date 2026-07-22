@@ -5,117 +5,92 @@ import { MultiInputForm } from "../../../shared/components/MultiInputForm"
 import { ButtonForm } from "../../../shared/components/ButtonForm"
 import { ModalLayout } from "../../../shared/components/ModalLayout"
 import { SIZE_UNITS } from "../../../../../shared/types"
+import type { JSX } from "react/jsx-runtime";
+import { SubcontainerForm } from "../../../shared/components/SubContainerForm"
+import { PromotionsForm } from "../components/PromotionsForm"
+import { CategoryCascadeForm } from "../components/CategoryCascadeForm"
 
 // Section heading used to group the product form fields (visual only for now).
-const SectionTitle = ({ children }: { children: string }) => (
-    <h3 className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
-        {children}
-    </h3>
-);
+const Row = ({ children }: { children: JSX.Element[] | JSX.Element }) => (
+    <div className="flex gap-3 w-full">{children}</div>
+)
 
 // Static "add product" form: shows every field of the Product model. No logic yet.
 export const AddProductModal = () => {
     return (
         <ModalLayout width="max-w-[800px]" title="Añadir Producto" onClose={() => {}}>
             <form className="flex max-h-[70vh] flex-col gap-4 overflow-y-auto pr-1">
-                <SectionTitle>Detalles</SectionTitle>
+                <SubcontainerForm title="Detalles">
+                    <CategoryCascadeForm />
 
-                <div className="flex gap-4 w-full">
-                    <InputForm label="Categoría" type="text" placeholder="Ej. Bebidas" />
-                    <InputForm label="Subcategoría" type="text" placeholder="Ej. Gaseosas" />
-                    <InputForm label="Marca" type="text" placeholder="Ej. Coca-Cola" />
-                </div>
+                    <Row>
+                        <InputForm label="Nombre" type="text" placeholder="Ej. Coca-Cola" />
+                        <InputForm label="Tamaño" type="number" placeholder="0" />
+                        <SelectForm
+                            label="Unidad"
+                            options={SIZE_UNITS}
+                            defaultValue="unit"
+                        />
+                    </Row>
 
-                <div className="flex gap-4 w-full">
-                    <InputForm label="Nombre" type="text" placeholder="Ej. Coca-Cola" />
-                    <InputForm label="Tamaño" type="number" placeholder="0" />
-                    <SelectForm
-                        label="Unidad"
-                        options={SIZE_UNITS}
-                        defaultValue="unit"
-                    />
-                </div>
-                
-                <div className="flex gap-4 w-full">
-                    <MultiInputForm
-                        label="Códigos de barra"
-                        placeholder="Ej. 7791234567890"
-                        addLabel="Añadir código"
-                    />
+                    <Row>
+                        <MultiInputForm
+                            label="Códigos de barra"
+                            placeholder="Ej. 7791234567890"
+                            addLabel="Añadir código"
+                        />
 
-                    <MultiInputForm
-                        label="Etiquetas"
-                        placeholder="Ej. oferta"
-                        addLabel="Añadir etiqueta"
-                    />
-                </div>
+                        <MultiInputForm
+                            label="Etiquetas"
+                            placeholder="Ej. oferta"
+                            addLabel="Añadir etiqueta"
+                        />
+                    </Row>
+                </SubcontainerForm>
 
-                <SectionTitle>Venta</SectionTitle>
-
-                <div className="flex gap-3">
-                    <div className="flex-1">
+                <SubcontainerForm title="Ventas">
+                    <Row>
                         <InputForm label="Costo" type="number" placeholder="0.00" />
-                    </div>
-                    <div className="flex-1">
                         <InputForm
                             label="Precio de venta"
                             type="number"
                             placeholder="0.00"
                         />
-                    </div>
-                </div>
+                    </Row>
+                    
+                    <CheckboxForm label="Producto pesable" />
+                </SubcontainerForm>
 
-                <CheckboxForm label="Producto pesable" />
 
-                <SectionTitle>Promoción</SectionTitle>
 
-                <div className="flex gap-3">
-                    <div className="flex-1">
-                        <InputForm
-                            label="Cantidad mínima"
-                            type="number"
-                            placeholder="0"
-                        />
-                    </div>
-                    <div className="flex-1">
-                        <InputForm
-                            label="Precio por unidad"
-                            type="number"
-                            placeholder="0.00"
-                        />
-                    </div>
-                </div>
+                <SubcontainerForm title="Promociones">
+                    <PromotionsForm />
+                </SubcontainerForm>
 
-                <SectionTitle>Stock</SectionTitle>
+                <SubcontainerForm title="Stock" optional>
+                    <Row>
+                        <InputForm label="Cantidad" type="number" placeholder="0" />
+                    </Row>
 
-                <InputForm label="Cantidad" type="number" placeholder="0" />
+                    <CheckboxForm label="Alertas de stock activadas" />
 
-                <CheckboxForm label="Alertas de stock activadas" />
-
-                <div className="flex gap-3">
-                    <div className="flex-1">
+                    <Row>
                         <InputForm label="Aviso" type="number" placeholder="0" />
-                    </div>
-                    <div className="flex-1">
                         <InputForm label="Bajo" type="number" placeholder="0" />
-                    </div>
-                    <div className="flex-1">
                         <InputForm label="Crítico" type="number" placeholder="0" />
-                    </div>
-                </div>
+                    </Row>
+                </SubcontainerForm>
 
-                <SectionTitle>Vencimiento (lote)</SectionTitle>
+                <SubcontainerForm title="Vencimiento (lote)" optional>
+                    <Row>
+                        <InputForm label="Cantidad del lote" type="number" placeholder="0" />
+                    </Row>
 
-                <InputForm label="Cantidad del lote" type="number" placeholder="0" />
-
-                <div className="flex gap-3">
-                    <div className="flex-1">
+                    <Row>
                         <InputForm label="Vence el" type="date" />
-                    </div>
-                    <div className="flex-1">
                         <InputForm label="Recibido el" type="date" />
-                    </div>
-                </div>
+                    </Row>
+                </SubcontainerForm>
 
                 <ButtonForm className="mt-2">Guardar Producto</ButtonForm>
             </form>
