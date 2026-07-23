@@ -54,7 +54,7 @@ export const PromotionsForm = () => {
                         type="button"
                         onClick={() => remove(index)}
                         aria-label="Quitar promoción"
-                        className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-slate-300 text-slate-400 transition hover:border-red-300 hover:text-red-500"
+                        className="flex h-[2.6rem] w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-slate-300 text-slate-400 transition hover:border-red-300 hover:text-red-500"
                     >
                         ✕
                     </button>
