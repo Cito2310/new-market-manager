@@ -5,12 +5,20 @@ import { CategoryMongo, SECTIONS } from "../../../shared/types";
 // Hydrated Mongoose document for a category
 export type CategoryDocument = HydratedDocument<CategoryMongo>;
 
+// A subcategory groups its own list of brands under the parent category
+const subcategorySchema = new Schema(
+    {
+        name: { type: String, required: true, trim: true },
+        brands: { type: [String], default: [] },
+    },
+    { _id: false }
+);
+
 const categorySchema = new Schema<CategoryMongo>(
     {
         section: { type: String, enum: [...SECTIONS], required: true },
         name: { type: String, required: true, trim: true },
-        subcategories: { type: [String], default: [] },
-        brands: { type: [String], default: [] },
+        subcategories: { type: [subcategorySchema], default: [] },
         createdBy: { type: String, required: true },
         updatedBy: { type: String, required: true },
         active: { type: Boolean, default: true },

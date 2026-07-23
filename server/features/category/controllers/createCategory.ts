@@ -5,15 +5,14 @@ import { CreateCategoryBody } from "../../../../shared/types";
 
 // Create Category
 export const createCategory = async (req: Request, res: Response) => {
-    const { section, name, subcategories, brands } = req.body as CreateCategoryBody;
+    const { section, name, subcategories } = req.body as CreateCategoryBody;
     const userId = String(req.user._id);
 
-    // subcategories/brands fall back to the schema defaults ([]) when omitted
+    // subcategories falls back to the schema default ([]) when omitted
     const category = new CategoryModel({
         section,
         name,
         subcategories,
-        brands,
         createdBy: userId,
         updatedBy: userId,
     });

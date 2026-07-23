@@ -207,11 +207,10 @@ Auth: `admin`, `cashier`.
 |---|---|---|
 | `section` | string | required, one of the [sections](#sections) |
 | `name` | string | required, 2–60 chars, unique **within its section** |
-| `subcategories` | string[] | optional, default `[]` |
-| `brands` | string[] | optional, default `[]` |
+| `subcategories` | `{ name: string, brands: string[] }[]` | optional, default `[]`; each `name` required, `brands` optional (default `[]`) |
 
 ```json
-{ "section": "bebidas", "name": "Gaseosas", "subcategories": ["colas", "citrus"], "brands": ["CocaCola", "Pepsi"] }
+{ "section": "bebidas", "name": "Gaseosas", "subcategories": [{ "name": "colas", "brands": ["CocaCola", "Pepsi"] }, { "name": "citrus", "brands": ["Sprite"] }] }
 ```
 
 **201** → the created category (with audit fields and `active: true`).
@@ -229,7 +228,7 @@ Auth: `admin`, `cashier`, `visit`. Lists all **active** categories.
 ### `PATCH /api/category/:id`
 Auth: `admin`, `cashier`. All fields optional.
 
-**Body:** same fields as create (`section?`, `name?`, `subcategories?`, `brands?`).
+**Body:** same fields as create (`section?`, `name?`, `subcategories?`).
 
 **200** → the updated category.
 **Errors:** `404 category not found`
@@ -346,8 +345,7 @@ Auth: `admin`, `cashier`. Soft delete (frees up the product's barcodes for reuse
   _id: string;
   section: Section;
   name: string;
-  subcategories: string[];
-  brands: string[];
+  subcategories: { name: string; brands: string[] }[];
   active: boolean;
   createdAt: Date; updatedAt: Date; createdBy: string; updatedBy: string;
 }

@@ -24,9 +24,11 @@ routeCategory.post("/", [
     check("name", "name length can only be between 2 and 60 characters").trim().isLength({ min: 2, max: 60 }),
 
     check("subcategories", "subcategories must be an array").optional().isArray(),
-    check("subcategories.*", "each subcategory must be a string").isString(),
-    check("brands", "brands must be an array").optional().isArray(),
-    check("brands.*", "each brand must be a string").isString(),
+    check("subcategories.*.name", "each subcategory name must be a non-empty string").trim().notEmpty(),
+    check("subcategories.*.name", "each subcategory name can be at most 32 characters").trim().isLength({ max: 32 }),
+    check("subcategories.*.brands", "each subcategory brands must be an array").optional().isArray(),
+    check("subcategories.*.brands.*", "each brand must be a string").isString(),
+    check("subcategories.*.brands.*", "each brand can be at most 32 characters").trim().isLength({ max: 32 }),
 
     check("name").custom(categoryExists),
 
@@ -48,9 +50,11 @@ routeCategory.patch("/:id", [
     check("name", "name length can only be between 2 and 60 characters").optional().trim().isLength({ min: 2, max: 60 }),
 
     check("subcategories", "subcategories must be an array").optional().isArray(),
-    check("subcategories.*", "each subcategory must be a string").isString(),
-    check("brands", "brands must be an array").optional().isArray(),
-    check("brands.*", "each brand must be a string").isString(),
+    check("subcategories.*.name", "each subcategory name must be a non-empty string").trim().notEmpty(),
+    check("subcategories.*.name", "each subcategory name can be at most 32 characters").trim().isLength({ max: 32 }),
+    check("subcategories.*.brands", "each subcategory brands must be an array").optional().isArray(),
+    check("subcategories.*.brands.*", "each brand must be a string").isString(),
+    check("subcategories.*.brands.*", "each brand can be at most 32 characters").trim().isLength({ max: 32 }),
 
     checkFields
 ], updateCategory);

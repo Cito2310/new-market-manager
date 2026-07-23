@@ -10,12 +10,11 @@ import { SubcontainerForm } from "../../../shared/components/SubContainerForm"
 import { PromotionsForm } from "../components/PromotionsForm"
 import { CategoryCascadeForm } from "../components/CategoryCascadeForm"
 
-// Section heading used to group the product form fields (visual only for now).
 const Row = ({ children }: { children: JSX.Element[] | JSX.Element }) => (
     <div className="flex gap-3 w-full">{children}</div>
 )
 
-// Static "add product" form: shows every field of the Product model. No logic yet.
+
 export const AddProductModal = () => {
     return (
         <ModalLayout width="max-w-[800px]" title="Añadir Producto" onClose={() => {}}>

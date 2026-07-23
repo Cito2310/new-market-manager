@@ -15,12 +15,17 @@ export const SECTIONS = [
 export type Section = (typeof SECTIONS)[number];
 
 
+export interface Subcategory {
+    name: string;
+    brands: string[];
+}
+
+
 export interface Category extends Auditable {
     _id: string;
     section: Section;
     name: string;
-    subcategories: string[];
-    brands: string[];
+    subcategories: Subcategory[];
     active: boolean;
 }
 
@@ -32,8 +37,7 @@ export type CategoryMongo = Omit<Category, "_id">;
 
 // POST / — audit fields (createdBy/updatedBy/timestamps) and active are set by the server.
 export type CreateCategoryBody = Pick<Category, "section" | "name"> & {
-    subcategories?: string[];
-    brands?: string[];
+    subcategories?: Subcategory[];
 };
 
 // PATCH /:id — every field optional; only the provided ones are updated.
