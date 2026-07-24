@@ -7,25 +7,32 @@ import { ButtonForm } from "../../../shared/components/ButtonForm"
 import { ModalLayout } from "../../../shared/components/ModalLayout"
 import { SubcontainerForm } from "../../../shared/components/SubContainerForm"
 import { SIZE_UNITS } from "../../../../../shared/types"
-import type { SizeUnit } from "../../../../../shared/types"
+import type { Product, SizeUnit } from "../../../../../shared/types"
 import { PromotionsForm } from "../components/PromotionsForm"
+import { BatchesForm } from "../components/BatchesForm"
 import { CategoryCascadeForm } from "../components/CategoryCascadeForm"
-import { useAddProduct } from "../hooks/useAddProduct"
+import { useProductForm } from "../hooks/useProductForm"
 
 const Row = ({ children }: { children: JSX.Element[] | JSX.Element }) => (
     <div className="flex gap-3 w-full">{children}</div>
 )
 
-type AddProductModalProps = {
+type ProductFormModalProps = {
     onClose: () => void;
+    // When provided, the form opens in edit mode (prefilled + PATCH).
+    product?: Product;
 }
 
-export const AddProductModal = ({ onClose }: AddProductModalProps) => {
-    const { cascade, details, sell, stock, expiry, error, isLoading, submit } =
-        useAddProduct(onClose);
+export const ProductFormModal = ({ onClose, product }: ProductFormModalProps) => {
+    const { isEditing, cascade, details, sell, stock, expiry, error, isLoading, submit } =
+        useProductForm(onClose, product);
 
     return (
-        <ModalLayout width="max-w-[800px]" title="Añadir Producto" onClose={onClose}>
+        <ModalLayout
+            width="max-w-[800px]"
+            title={isEditing ? "Editar Producto" : "Añadir Producto"}
+            onClose={onClose}
+        >
             <form onSubmit={submit} className="flex max-h-[70vh] flex-col gap-4 overflow-y-auto pr-1">
                 <SubcontainerForm title="Detalles">
                     <CategoryCascadeForm cascade={cascade} />
@@ -143,37 +150,18 @@ export const AddProductModal = ({ onClose }: AddProductModalProps) => {
                     </Row>
                 </SubcontainerForm>
 
-                <SubcontainerForm title="Vencimiento (lote)" optional open={expiry.open} onToggle={expiry.toggle}>
-                    <Row>
-                        <InputForm
-                            label="Cantidad del lote"
-                            type="number"
-                            placeholder="0"
-                            value={expiry.batchQuantity}
-                            onChange={(event) => expiry.setBatchQuantity(event.target.value)}
-                        />
-                    </Row>
-
-                    <Row>
-                        <InputForm
-                            label="Vence el"
-                            type="date"
-                            value={expiry.expirationDate}
-                            onChange={(event) => expiry.setExpirationDate(event.target.value)}
-                        />
-                        <InputForm
-                            label="Recibido el"
-                            type="date"
-                            value={expiry.receivedAt}
-                            onChange={(event) => expiry.setReceivedAt(event.target.value)}
-                        />
-                    </Row>
+                <SubcontainerForm title="Vencimiento (lotes)" optional open={expiry.open} onToggle={expiry.toggle}>
+                    <BatchesForm value={expiry.batches} onChange={expiry.setBatches} />
                 </SubcontainerForm>
 
                 {error && <p className="ml-1 text-sm text-red-500">{error}</p>}
 
                 <ButtonForm className="mt-2" disabled={isLoading}>
-                    {isLoading ? "Guardando..." : "Guardar Producto"}
+                    {isLoading
+                        ? "Guardando..."
+                        : isEditing
+                            ? "Guardar cambios"
+                            : "Guardar Producto"}
                 </ButtonForm>
             </form>
         </ModalLayout>

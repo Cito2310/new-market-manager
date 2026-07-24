@@ -78,5 +78,9 @@ export type CreateProductBody = Pick<Product, "details" | "sell"> & {
     expiry?: ExpiryInput;
 };
 
-// PATCH /:id — every top-level block optional; the provided ones replace their sub-object.
-export type UpdateProductBody = Partial<CreateProductBody>;
+// PATCH /:id — every top-level block optional; the provided ones replace their
+// sub-object. `stock`/`expiry` also accept `null` to clear (remove) the block.
+export type UpdateProductBody = Partial<Pick<CreateProductBody, "details" | "sell">> & {
+    stock?: Product["stock"] | null;
+    expiry?: ExpiryInput | null;
+};

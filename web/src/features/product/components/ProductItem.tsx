@@ -5,10 +5,12 @@ import type { Product } from "../../../../../shared/types"
 
 interface ProductItemProps {
     product: Product
+    onEdit: (product: Product) => void
+    onDelete: (product: Product) => void
 }
 
 // A single row of the products table.
-export const ProductItem = ({ product }: ProductItemProps) => {
+export const ProductItem = ({ product, onEdit, onDelete }: ProductItemProps) => {
     const getProductNameParsed = ({ details }: Product) => {
         const { brand, name, size, sizeUnit } = details
 
@@ -43,7 +45,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
                 <button
                     type="button"
                     aria-label="Editar producto"
-                    onClick={() => {}}
+                    onClick={() => onEdit(product)}
                     className="flex cursor-pointer items-center justify-center rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 hover:text-blue-600"
                 >
                     <PencilIcon />
@@ -51,7 +53,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
                 <button
                     type="button"
                     aria-label="Borrar producto"
-                    onClick={() => {}}
+                    onClick={() => onDelete(product)}
                     className="flex cursor-pointer items-center justify-center rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 hover:text-red-600"
                 >
                     <TrashIcon />

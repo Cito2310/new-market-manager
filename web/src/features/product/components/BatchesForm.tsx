@@ -1,21 +1,21 @@
 import { InputForm } from "../../../shared/components/InputForm";
-import type { PromotionDraft } from "../hooks/useProductForm";
+import type { BatchDraft } from "../hooks/useProductForm";
 
-type PromotionsFormProps = {
-    value: PromotionDraft[];
-    onChange: (rows: PromotionDraft[]) => void;
+type BatchesFormProps = {
+    value: BatchDraft[];
+    onChange: (rows: BatchDraft[]) => void;
 };
 
-// Growable list of promotions (minQuantity + pricePerUnit). Starts empty:
-// "no promotions" is just an empty list. Controlled by the parent.
-export const PromotionsForm = ({ value, onChange }: PromotionsFormProps) => {
+// Growable list of batches (quantity + expiration + received dates). Starts
+// empty: "no batches" is just an empty list. Controlled by the parent.
+export const BatchesForm = ({ value, onChange }: BatchesFormProps) => {
     const add = () =>
-        onChange([...value, { minQuantity: "", pricePerUnit: "" }]);
+        onChange([...value, { quantity: "", expirationDate: "", receivedAt: "" }]);
 
     const remove = (index: number) =>
         onChange(value.filter((_, i) => i !== index));
 
-    const update = (index: number, field: keyof PromotionDraft, next: string) =>
+    const update = (index: number, field: keyof BatchDraft, next: string) =>
         onChange(
             value.map((row, i) =>
                 i === index ? { ...row, [field]: next } : row,
@@ -28,30 +28,39 @@ export const PromotionsForm = ({ value, onChange }: PromotionsFormProps) => {
                 <div key={index} className="flex items-end gap-2">
                     <div className="min-w-0 flex-1">
                         <InputForm
-                            label="Cantidad mínima"
+                            label="Cantidad"
                             type="number"
                             placeholder="0"
-                            value={row.minQuantity}
+                            value={row.quantity}
                             onChange={(event) =>
-                                update(index, "minQuantity", event.target.value)
+                                update(index, "quantity", event.target.value)
                             }
                         />
                     </div>
                     <div className="min-w-0 flex-1">
                         <InputForm
-                            label="Precio por unidad"
-                            type="number"
-                            placeholder="0.00"
-                            value={row.pricePerUnit}
+                            label="Vence el"
+                            type="date"
+                            value={row.expirationDate}
                             onChange={(event) =>
-                                update(index, "pricePerUnit", event.target.value)
+                                update(index, "expirationDate", event.target.value)
+                            }
+                        />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                        <InputForm
+                            label="Recibido el"
+                            type="date"
+                            value={row.receivedAt}
+                            onChange={(event) =>
+                                update(index, "receivedAt", event.target.value)
                             }
                         />
                     </div>
                     <button
                         type="button"
                         onClick={() => remove(index)}
-                        aria-label="Quitar promoción"
+                        aria-label="Quitar lote"
                         className="flex h-[2.6rem] w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-slate-300 text-slate-400 transition hover:border-red-300 hover:text-red-500"
                     >
                         ✕
@@ -64,7 +73,7 @@ export const PromotionsForm = ({ value, onChange }: PromotionsFormProps) => {
                 onClick={add}
                 className="ml-1 mt-1 self-start cursor-pointer text-sm font-medium text-slate-600 transition hover:text-slate-800"
             >
-                + Añadir promoción
+                + Añadir lote
             </button>
         </div>
     );
