@@ -12,14 +12,14 @@ const promotionSchema = new Schema(
 
 const detailsSchema = new Schema(
     {
-        name: { type: String, required: true, trim: true },
-        brand: { type: String, required: true, trim: true },
-        category: { type: String, required: true },
-        subcategory: { type: String, required: true },
+        name: { type: String, required: true, trim: true, lowercase: true },
+        brand: { type: String, required: true, trim: true, lowercase: true },
+        category: { type: String, required: true, lowercase: true },
+        subcategory: { type: String, required: true, lowercase: true },
         barcodes: { type: [String], default: [] },
         size: { type: Number, required: true },
         sizeUnit: { type: String, enum: [...SIZE_UNITS], required: true },
-        tags: { type: [String], default: [] },
+        tags: { type: [String], default: [], lowercase: true },
     },
     { _id: false }
 );
