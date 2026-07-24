@@ -1,28 +1,29 @@
-import { useState } from "react";
-
 type MultiInputFormProps = {
     label: string;
+    value: string[];
+    onChange: (values: string[]) => void;
     placeholder?: string;
     addLabel?: string;
     className?: string;
 };
 
 // Label with a growing list of text inputs: the button appends a new row below.
+// Controlled: the value list and its updates are owned by the parent.
 export const MultiInputForm = ({
     label,
+    value,
+    onChange,
     placeholder,
     addLabel = "Añadir",
     className = "",
 }: MultiInputFormProps) => {
-    const [values, setValues] = useState<string[]>([""]);
-
-    const add = () => setValues((prev) => [...prev, ""]);
+    const add = () => onChange([...value, ""]);
 
     const remove = (index: number) =>
-        setValues((prev) => prev.filter((_, i) => i !== index));
+        onChange(value.filter((_, i) => i !== index));
 
-    const update = (index: number, value: string) =>
-        setValues((prev) => prev.map((v, i) => (i === index ? value : v)));
+    const update = (index: number, next: string) =>
+        onChange(value.map((v, i) => (i === index ? next : v)));
 
     return (
         <div className={`flex w-full min-w-0 flex-col gap-1.5 ${className}`}>
@@ -31,15 +32,15 @@ export const MultiInputForm = ({
             </label>
 
             <div className="flex flex-col gap-2">
-                {values.map((value, index) => (
+                {value.map((entry, index) => (
                     <div key={index} className="flex items-center gap-2">
                         <input
-                            value={value}
+                            value={entry}
                             onChange={(event) => update(index, event.target.value)}
                             placeholder={placeholder}
                             className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-slate-800 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-400/20"
                         />
-                        {values.length > 1 && (
+                        {value.length > 1 && (
                             <button
                                 type="button"
                                 onClick={() => remove(index)}

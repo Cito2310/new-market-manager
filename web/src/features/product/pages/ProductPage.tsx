@@ -1,15 +1,18 @@
+import { useState } from "react"
 import { ButtonForm } from "../../../shared/components/ButtonForm"
 import { SearchIcon } from "../../../shared/components/icons/SearchIcon"
 import { AddProductModal } from "../modals/AddProductModal"
 
 export const ProductPage = () => {
-    return <> 
-        <AddProductModal/>
+    const [isAdding, setIsAdding] = useState(false)
+
+    return <>
+        {isAdding && <AddProductModal onClose={() => setIsAdding(false)} />}
 
         <div className="mx-auto flex max-w-5xl flex-col gap-6 p-8">
             <section className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold text-slate-800">Productos</h1>
-                <ButtonForm>+ Añadir Producto</ButtonForm>
+                <ButtonForm onClick={() => setIsAdding(true)}>+ Añadir Producto</ButtonForm>
             </section>
 
             <div className="flex flex-col gap-4 rounded-2xl bg-white p-6 shadow-xl">

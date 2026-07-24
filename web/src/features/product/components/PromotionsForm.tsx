@@ -1,32 +1,30 @@
-import { useState } from "react";
 import { InputForm } from "../../../shared/components/InputForm";
+import type { PromotionDraft } from "../hooks/useAddProduct";
 
-type PromotionRow = {
-    minQuantity: string;
-    pricePerUnit: string;
+type PromotionsFormProps = {
+    value: PromotionDraft[];
+    onChange: (rows: PromotionDraft[]) => void;
 };
 
 // Growable list of promotions (minQuantity + pricePerUnit). Starts empty:
-// "no promotions" is just an empty list. Visual only for now.
-export const PromotionsForm = () => {
-    const [rows, setRows] = useState<PromotionRow[]>([]);
-
+// "no promotions" is just an empty list. Controlled by the parent.
+export const PromotionsForm = ({ value, onChange }: PromotionsFormProps) => {
     const add = () =>
-        setRows((prev) => [...prev, { minQuantity: "", pricePerUnit: "" }]);
+        onChange([...value, { minQuantity: "", pricePerUnit: "" }]);
 
     const remove = (index: number) =>
-        setRows((prev) => prev.filter((_, i) => i !== index));
+        onChange(value.filter((_, i) => i !== index));
 
-    const update = (index: number, field: keyof PromotionRow, value: string) =>
-        setRows((prev) =>
-            prev.map((row, i) =>
-                i === index ? { ...row, [field]: value } : row,
+    const update = (index: number, field: keyof PromotionDraft, next: string) =>
+        onChange(
+            value.map((row, i) =>
+                i === index ? { ...row, [field]: next } : row,
             ),
         );
 
     return (
         <div className="flex flex-col gap-2">
-            {rows.map((row, index) => (
+            {value.map((row, index) => (
                 <div key={index} className="flex items-end gap-2">
                     <div className="min-w-0 flex-1">
                         <InputForm

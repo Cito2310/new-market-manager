@@ -1,12 +1,17 @@
 import { SECTIONS } from "../../../../../shared/types";
 import { ComboBoxForm } from "../../../shared/components/ComboBoxForm";
 import { SelectForm } from "../../../shared/components/SelectForm";
-import { useCategoryCascade } from "../hooks/useCategoryCascade";
+import type { useCategoryCascade } from "../hooks/useCategoryCascade";
+
+type CategoryCascadeFormProps = {
+    cascade: ReturnType<typeof useCategoryCascade>;
+};
 
 // Dependent Section -> Category -> Subcategory -> Brand selection with creatable
-// options. All state and catalog mutations live in useCategoryCascade.
-export const CategoryCascadeForm = () => {
-    const { section, selectSection, error, levels } = useCategoryCascade();
+// options. Presentational: the cascade state comes from the parent (so the form
+// that owns it can read the selection when saving).
+export const CategoryCascadeForm = ({ cascade }: CategoryCascadeFormProps) => {
+    const { section, selectSection, error, levels } = cascade;
 
     return (
         <div className="flex w-full flex-col gap-1.5">

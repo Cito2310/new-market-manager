@@ -168,5 +168,5 @@ export const useCategoryCascade = () => {
         },
     ];
 
-    return { section, selectSection, error, levels };
+    return { section, category, subcategory, brand, selectSection, error, levels };
 };

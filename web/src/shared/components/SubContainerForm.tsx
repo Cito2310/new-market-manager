@@ -6,13 +6,20 @@ interface props {
     // When true, shows a switch in the header that mounts/unmounts the children.
     // Meant for optional model blocks (stock, expiry): hidden => sent as undefined.
     optional?: boolean;
+    // Optional controlled switch: pass both to let the parent own the open state
+    // (so it knows whether to include the block). Falls back to internal state.
+    open?: boolean;
+    onToggle?: () => void;
     children: JSX.Element[] | JSX.Element | string
 }
 
-export const SubcontainerForm = ({ children, title, optional = false }: props) => {
-    const [open, setOpen] = useState(false);
+export const SubcontainerForm = ({ children, title, optional = false, open, onToggle }: props) => {
+    const [internalOpen, setInternalOpen] = useState(false);
 
-    const showChildren = !optional || open;
+    const isOpen = open ?? internalOpen;
+    const toggle = () => (onToggle ? onToggle() : setInternalOpen((value) => !value));
+
+    const showChildren = !optional || isOpen;
 
     return (
         <div className="w-full flex flex-col gap-3">
@@ -23,13 +30,13 @@ export const SubcontainerForm = ({ children, title, optional = false }: props) =
                     <button
                         type="button"
                         role="switch"
-                        aria-checked={open}
+                        aria-checked={isOpen}
                         aria-label={`Incluir ${title}`}
-                        onClick={() => setOpen((value) => !value)}
-                        className={`relative mt-2 h-5 w-9 shrink-0 cursor-pointer rounded-full transition ${open ? "bg-slate-800" : "bg-slate-300"}`}
+                        onClick={toggle}
+                        className={`relative mt-2 h-5 w-9 shrink-0 cursor-pointer rounded-full transition ${isOpen ? "bg-slate-800" : "bg-slate-300"}`}
                     >
                         <span
-                            className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all ${open ? "left-4" : "left-0.5"}`}
+                            className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all ${isOpen ? "left-4" : "left-0.5"}`}
                         />
                     </button>
                 )}
