@@ -30,7 +30,7 @@ export const StockBar = ({ currentStock, lowStock }: propsStockBar) => {
 
     return <td className="py-3">
         <div className="flex flex-col gap-1">
-            <p className="text-sm font-medium">{currentStock} - {status.text}</p>
+            <p className="text-center text-sm font-medium">{currentStock} - {status.text}</p>
             <div style={{ backgroundColor: status.bgColor }} className="h-2 w-full rounded-lg">
                 <div
                     style={{ backgroundColor: status.barColor, width: `${status.percentage}%` }}

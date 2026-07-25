@@ -1,6 +1,8 @@
 import { PencilIcon } from "../../../shared/components/icons/PencilIcon"
 import { TrashIcon } from "../../../shared/components/icons/TrashIcon"
 import { StockBar } from "./StockBar"
+import { getProductName } from "../helpers/productName"
+import { getEarliestExpiry, describeExpiry } from "../helpers/productExpiry"
 import type { Product } from "../../../../../shared/types"
 
 interface ProductItemProps {
@@ -11,25 +13,17 @@ interface ProductItemProps {
 
 // A single row of the products table.
 export const ProductItem = ({ product, onEdit, onDelete }: ProductItemProps) => {
-    const getProductNameParsed = ({ details }: Product) => {
-        const { brand, name, size, sizeUnit } = details
-
-        return `${brand} ${name} ${size}${sizeUnit}`
-    }
+    const expiry = getEarliestExpiry(product)
+    const expiryInfo = expiry ? describeExpiry(expiry) : null
 
     return <tr className="border-b border-slate-100 text-slate-700 transition hover:bg-slate-50">
-        <td className="py-3 font-medium text-slate-800">{getProductNameParsed(product)}</td>
-        <td className="py-3">
-            <span className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">
+        <td className="py-3 font-medium capitalize text-slate-800">{getProductName(product)}</td>
+        <td className="py-3 text-center">
+            <span className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium capitalize text-slate-600">
                 {product.details.category}
             </span>
-            {product.details.subcategory && (
-                <span className="ml-2 text-xs text-slate-400">
-                    {product.details.subcategory}
-                </span>
-            )}
         </td>
-        <td className="py-3 font-medium text-slate-800">
+        <td className="py-3 text-center font-medium text-slate-800">
             ${product.sell.salePrice.toLocaleString("es-AR")}
         </td>
         {product.stock ? (
@@ -38,10 +32,15 @@ export const ProductItem = ({ product, onEdit, onDelete }: ProductItemProps) => 
                 lowStock={product.stock.alerts.low}
             />
         ) : (
-            <td className="py-3 text-slate-400">-</td>
+            <td className="py-3 text-center text-slate-400">-</td>
         )}
+        <td className="py-3 text-center text-sm">
+            {expiryInfo
+                ? <span className={expiryInfo.className}>{expiryInfo.label}</span>
+                : <span className="text-slate-400">-</span>}
+        </td>
         <td className="py-3">
-            <div className="flex items-center justify-end gap-1">
+            <div className="flex items-center justify-center gap-1">
                 <button
                     type="button"
                     aria-label="Editar producto"
