@@ -12,10 +12,14 @@ export const ProtectedRoute = () => {
 
     if (status !== "authenticated") return <Navigate to="/login" replace />;
 
+    // The shell owns the viewport height so the window itself never scrolls: pages
+    // scroll inside the content area, keeping the topbar clear of the scrollbar.
     return (
-        <>
+        <div className="flex h-screen flex-col">
             <Topbar />
-            <Outlet />
-        </>
+            <div className="min-h-0 flex-1 overflow-y-auto">
+                <Outlet />
+            </div>
+        </div>
     );
 };

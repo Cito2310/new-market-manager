@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { LoginPage } from "../features/auth/pages/LoginPage";
 import { RegisterPage } from "../features/auth/pages/RegisterPage";
 import { ProductPage } from "../features/product/pages/ProductPage";
+import { PosPage } from "../features/pos/pages/PosPage";
 import { GuestRoute } from "./routes/GuestRoute";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 
@@ -20,6 +21,7 @@ const App = () => {
 
                     <Route element={<ProtectedRoute />}>
                         <Route path="/products" element={<ProductPage />} />
+                        <Route path="/pos" element={<PosPage />} />
                     </Route>
 
                     <Route path="*" element={<Navigate to="/login" replace />} />
