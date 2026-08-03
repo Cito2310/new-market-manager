@@ -2,8 +2,8 @@ import type { SVGProps } from "react";
 
 // Inline pencil icon (edit action). Rendered from local markup so it works offline.
 export const PencilIcon = ({
-    width = 18,
-    height = 18,
+    width = "1em",
+    height = "1em",
     ...props
 }: SVGProps<SVGSVGElement>) => {
     return (

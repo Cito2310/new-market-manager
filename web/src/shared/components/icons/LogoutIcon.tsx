@@ -1,7 +1,7 @@
 import type { SVGProps } from "react";
 
-// Inline trash-can icon (delete action). Rendered from local markup so it works offline.
-export const TrashIcon = ({
+// Inline logout icon (door with an arrow). Rendered from local markup so it works offline.
+export const LogoutIcon = ({
     width = "1em",
     height = "1em",
     ...props
@@ -19,11 +19,9 @@ export const TrashIcon = ({
             aria-hidden="true"
             {...props}
         >
-            <polyline points="3 6 5 6 21 6" />
-            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-            <path d="M10 11v6" />
-            <path d="M14 11v6" />
-            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
         </svg>
     );
 };

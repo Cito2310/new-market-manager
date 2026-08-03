@@ -2,8 +2,8 @@ import type { SVGProps } from "react";
 
 // Inline magnifying-glass icon. Rendered from local markup so it works offline.
 export const SearchIcon = ({
-    width = 18,
-    height = 18,
+    width = "1em",
+    height = "1em",
     ...props
 }: SVGProps<SVGSVGElement>) => {
     return (

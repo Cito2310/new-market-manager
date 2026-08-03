@@ -1,7 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAppSelector } from "../store/hooks";
+import { Topbar } from "../../features/topbar/Topbar";
 
 // Guards authenticated-only routes: sends guests to the login page.
+// Authenticated pages share the topbar rendered here above the routed content.
 export const ProtectedRoute = () => {
     const status = useAppSelector((state) => state.auth.status);
 
@@ -10,5 +12,10 @@ export const ProtectedRoute = () => {
 
     if (status !== "authenticated") return <Navigate to="/login" replace />;
 
-    return <Outlet />;
+    return (
+        <>
+            <Topbar />
+            <Outlet />
+        </>
+    );
 };
