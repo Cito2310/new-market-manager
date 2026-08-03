@@ -1,6 +1,6 @@
 import { useState } from "react"
 import type { Product } from "../../../../../shared/types"
-import { ButtonForm } from "../../../shared/components/ButtonForm"
+import { Button } from "../../../shared/components/Button"
 import { ProductFormModal } from "../modals/ProductFormModal"
 import { DeleteProductModal } from "../modals/DeleteProductModal"
 import { useProducts } from "../hooks/useProducts"
@@ -48,7 +48,7 @@ export const ProductPage = () => {
         <div className="mx-auto flex max-w-5xl flex-col gap-6 p-8">
             <section className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold text-slate-800">Productos</h1>
-                <ButtonForm onClick={() => setIsAdding(true)}>+ Añadir Producto</ButtonForm>
+                <Button onClick={() => setIsAdding(true)}>+ Añadir Producto</Button>
             </section>
 
             <div className="flex flex-col gap-4 rounded-2xl bg-white p-6 shadow-xl">

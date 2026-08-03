@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ButtonForm } from "../../../shared/components/ButtonForm";
+import { Button } from "../../../shared/components/Button";
 import { InputForm } from "../../../shared/components/InputForm";
 import { ModalLayout } from "../../../shared/components/ModalLayout";
 import { useLogin } from "../hooks/useLogin";
@@ -33,9 +33,9 @@ export const LoginPage = () => {
                     </p>
                 )}
 
-                <ButtonForm className="mt-2" disabled={isLoading}>
+                <Button type="submit" className="mt-2" disabled={isLoading}>
                     {isLoading ? "Ingresando…" : "Ingresar"}
-                </ButtonForm>
+                </Button>
             </form>
 
             <p className="mt-6 text-center text-sm text-slate-500">

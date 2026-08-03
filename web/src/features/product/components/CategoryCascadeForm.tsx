@@ -1,6 +1,7 @@
 import { SECTIONS } from "../../../../../shared/types";
 import { ComboBoxForm } from "../../../shared/components/ComboBoxForm";
 import { SelectForm } from "../../../shared/components/SelectForm";
+import { FormError } from "../../../shared/components/FormError";
 import type { useCategoryCascade } from "../hooks/useCategoryCascade";
 
 type CategoryCascadeFormProps = {
@@ -34,7 +35,7 @@ export const CategoryCascadeForm = ({ cascade }: CategoryCascadeFormProps) => {
                 ))}
             </div>
 
-            {error && <p className="ml-1 text-sm text-red-500">{error}</p>}
+            <FormError message={error} />
         </div>
     );
 };

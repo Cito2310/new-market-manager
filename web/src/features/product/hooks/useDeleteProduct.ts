@@ -5,8 +5,7 @@ import { useAppDispatch } from "../../../app/store/hooks";
 import { deleteProduct } from "../productApi";
 import { removeProductById } from "../productSlice";
 
-// Handles the delete request for a single product: drops it from the store on
-// success and surfaces any failure. `onClose` runs after a successful delete.
+// CHECKED
 export const useDeleteProduct = (product: Product, onClose: () => void) => {
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);

@@ -3,7 +3,6 @@ import { InputForm } from "../../../shared/components/InputForm"
 import { SelectForm } from "../../../shared/components/SelectForm"
 import { CheckboxForm } from "../../../shared/components/CheckboxForm"
 import { MultiInputForm } from "../../../shared/components/MultiInputForm"
-import { ButtonForm } from "../../../shared/components/ButtonForm"
 import { ModalLayout } from "../../../shared/components/ModalLayout"
 import { SubcontainerForm } from "../../../shared/components/SubContainerForm"
 import { SIZE_UNITS } from "../../../../../shared/types"
@@ -12,6 +11,8 @@ import { PromotionsForm } from "../components/PromotionsForm"
 import { BatchesForm } from "../components/BatchesForm"
 import { CategoryCascadeForm } from "../components/CategoryCascadeForm"
 import { useProductForm } from "../hooks/useProductForm"
+import { Button } from "../../../shared/components/Button";
+import { FormError } from "../../../shared/components/FormError";
 
 const Row = ({ children }: { children: JSX.Element[] | JSX.Element }) => (
     <div className="flex gap-3 w-full">{children}</div>
@@ -154,15 +155,16 @@ export const ProductFormModal = ({ onClose, product }: ProductFormModalProps) =>
                     <BatchesForm value={expiry.batches} onChange={expiry.setBatches} />
                 </SubcontainerForm>
 
-                {error && <p className="ml-1 text-sm text-red-500">{error}</p>}
+                <FormError message={error} />
 
-                <ButtonForm className="mt-2" disabled={isLoading}>
-                    {isLoading
+                <Button disabled={isLoading} type="submit">
+                    { isLoading
                         ? "Guardando..."
-                        : isEditing
-                            ? "Guardar cambios"
-                            : "Guardar Producto"}
-                </ButtonForm>
+                        : isEditing 
+                            ? "Guardar Cambios"
+                            : "Guardar Producto"
+                    }
+                </Button>
             </form>
         </ModalLayout>
     )
