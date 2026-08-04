@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes } from "react";
 
-type ButtonVariant = "primary" | "nav" | "tab" | "tab-active" | "secondary" | "ghost" | "danger" | "danger-soft" | "success";
+type ButtonVariant = "primary" | "nav" | "secondary" | "ghost" | "danger" | "danger-soft" | "success";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: ButtonVariant;
@@ -15,10 +15,6 @@ const variants = {
     // No background or border until hovered. The hover text color is left to the
     // caller, so the same variant serves edit (blue), delete (red), etc.
     "ghost": "text-slate-400 hover:bg-slate-100 active:bg-slate-200",
-    // Borderless tabs that sit on top of a divider: square bottom corners so the
-    // edge touching the line stays flush.
-    "tab": "rounded-t-lg rounded-b-none text-slate-500 hover:bg-slate-100 hover:text-slate-700",
-    "tab-active": "rounded-t-lg rounded-b-none bg-slate-800 text-white",
     "danger": "bg-red-600 text-white hover:brightness-[.95] active:brightness-[.90]",
     // Reads as secondary until touched: red text on hover, reddish tint when pressed.
     "danger-soft": "ring-1 ring-slate-300 text-slate-700 bg-white hover:text-red-600 active:bg-red-100 active:text-red-700 active:brightness-[.95]",
